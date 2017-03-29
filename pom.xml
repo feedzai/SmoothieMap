@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>smoothie-map</artifactId>
-    <version>1.3</version>
+    <version>1.3_shaded</version>
     <name>SmoothieMap</name>
     <description>SmoothieMap is a java.util.Map implementation with worst put(k, v) operation
         latencies more than 100 times smaller than in ordinary hash table implementations like
@@ -103,6 +103,31 @@
                     <pubScmUrl>scm:git:git@github.com:OpenHFT/SmoothieMap</pubScmUrl>
                     <scmBranch>gh-pages</scmBranch>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.ow2.asm:asm</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.objectweb.asm</pattern>
+                                    <shadedPattern>shaded.org.objectweb.asm</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
